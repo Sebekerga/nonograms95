@@ -22,7 +22,7 @@ const gameSlice = createSlice({
   reducers: {
 
     // Loads a new puzzle passed in a payload and clears solution for a previous puzzle
-    loadPuzzle(state, action) {
+    loadPuzzle: (state, action) => {
       return {
         puzzle: generatePuzzleClues(action.payload),
         solution: action.payload.map(
@@ -35,11 +35,16 @@ const gameSlice = createSlice({
     },
 
     // Assigns a state to a single pixel in a player's solution
-    setPixel(state, action) {
+    setPixel: (state, action) => {
       const { x, y } = action.payload.position
+
       state.solution[x][y] = action.payload.state
       state.solved = checkSolution(state.puzzle, state.solution)
-      return state
+
+      if (state.solved)
+        state.solution = state.solution.map(
+          column => column.map(
+            item => item === cell_states.filled ? item : cell_states.crossed))
     }
   }
 })
