@@ -1,0 +1,37 @@
+/* for horizontal clues th */
+tr.horizontal-clue, th.horizontal-clue {
+  vertical-align: middle !important;
+}
+ul.horizontal-clue {
+  text-align: end;
+}
+
+ul.horizontal-clue>li{
+  margin-right: 7pt;
+  padding-left: 0pt;
+  margin-left: 0pt;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+/* for vertical clues th */
+tr.vertical-clue, th.vertical-clue {
+  vertical-align: bottom !important;
+}
+
+ul.vertical-clue {
+  padding-right: 5pt;
+}
+
+ul.vertical-clue>li {
+  display: block;
+}
+
+/* for cell button propper aligment */
+.cell-button{
+  display: flex !important;
+}
+
+.cell-button::after{
+  outline: none !important;
+}
