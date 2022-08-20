@@ -35,3 +35,12 @@ ul.vertical-clue>li {
 .cell-button::after{
   outline: none !important;
 }
+
+.cell-button.plain-colored{
+  background-image: none !important;
+}
+
+.cell-button.plain-colored::before{
+  border-width: 0px !important;
+}
+

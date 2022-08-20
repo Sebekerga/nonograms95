@@ -3,7 +3,6 @@ import './NonogramPuzzle.css'
 
 import { useSelector } from "react-redux"
 import { useTheme } from "styled-components"
-import { Button } from "react95"
 
 
 const empty_puzzle = [[]]
@@ -33,7 +32,6 @@ const Puzzle = () => {
   }
 
   return <>
-    <Button disabled>asd</Button>
     {current_puzzle !== empty_puzzle
       ? <Grid
         headers={headers}

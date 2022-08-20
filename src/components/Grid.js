@@ -12,7 +12,7 @@ const Cell = ({ position }) => {
   // const [state, setState] = useState(initialState)
   const dispatch = useDispatch()
   const cell_state = useSelector(state => state.game.solution[position.x][position.y])
-  const puzzle_solved = useSelector(state => state.solved)
+  const puzzle_solved = useSelector(state => state.game.solved)
 
   const handleClick = (event) => {
     event.preventDefault()
@@ -25,11 +25,13 @@ const Cell = ({ position }) => {
   }
 
   const button_is_active = cell_state !== cell_states.empty
-  const button_color = cellColor(cell_state)
+  const button_color = cellColor(cell_state).color
+  const button_class_name = puzzle_solved ? 'cell-button plain-colored' : 'cell-button'
+  console.log(puzzle_solved)
 
   return <Button
     // style
-    className='cell-button'
+    className={button_class_name}
     square={true}
     size='sm'
 

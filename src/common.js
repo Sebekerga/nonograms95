@@ -21,11 +21,20 @@ export /**
   const cellColor = (state) => {
     switch (state) {
       case cell_states.filled:
-        return app_theme.materialText
+        return {
+          color: app_theme.materialText,
+          filled: true
+        }
       case cell_states.crossed:
-        return app_theme.materialTextInverted
+        return {
+          color: app_theme.materialTextInverted,
+          filled: false
+        }
       default:
-        return app_theme.material
+        return {
+          color: app_theme.material,
+          filled: false
+        }
     }
   }
 
@@ -55,7 +64,7 @@ export /**
  */
   const generatePuzzleClues = (puzzle) => {
     const vertical = puzzle.map(column => rowToClues(column))
-    const horizontal = Array.from({length: puzzle[0].length}, (_, i) => rowToClues(puzzle.map(column => column[i])))
+    const horizontal = Array.from({ length: puzzle[0].length }, (_, i) => rowToClues(puzzle.map(column => column[i])))
 
     return {
       horizontal,
@@ -69,15 +78,15 @@ export /**
  *
  * @param {Number} current_state current state as defined in 'cell_states'
  */
-const getNewCellState = (current_state) => {
-  switch (current_state) {
-    case cell_states.empty:
-      return cell_states.filled
-    case cell_states.filled:
-      return cell_states.crossed
-    default:
-      return cell_states.empty
+  const getNewCellState = (current_state) => {
+    switch (current_state) {
+      case cell_states.empty:
+        return cell_states.filled
+      case cell_states.filled:
+        return cell_states.crossed
+      default:
+        return cell_states.empty
+    }
   }
-}
 
 
