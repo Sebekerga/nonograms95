@@ -1,7 +1,7 @@
 import { Button } from 'react95';
 import './Grid.css'
 
-import { cell_states, cellColor, getNewCellState } from '../common';
+import { cell_states, cellColor, getNewCellState } from '../app/common';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setPixel } from '../features/nonogramPuzzleReducer';
@@ -27,7 +27,6 @@ const Cell = ({ position }) => {
   const button_is_active = cell_state !== cell_states.empty
   const button_color = cellColor(cell_state).color
   const button_class_name = puzzle_solved ? 'cell-button plain-colored' : 'cell-button'
-  console.log(puzzle_solved)
 
   return <Button
     // style
@@ -40,7 +39,8 @@ const Cell = ({ position }) => {
     style={{ backgroundColor: button_color }}
 
     // events
-    onClick={handleClick} />
+    onClick={handleClick} 
+    />
 }
 
 const Grid = ({ headers, dimensions }) => {

@@ -1,0 +1,29 @@
+div.menu, div.submenu{
+  position: relative;
+  display: inline-block;
+  align-self: left;
+} 
+
+ul.menu{
+  position: absolute;
+  left: 0;
+  top: 100%;
+  z-index: 1000;
+}
+
+ul.submenu {
+  position: absolute;
+  left: 100%;
+  top: 0%;
+  z-index: 1000;
+}
+
+.menu>li, .submenu>li{
+  margin: 0;
+}
+
+div.window{
+  top: 50%; 
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

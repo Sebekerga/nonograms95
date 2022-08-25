@@ -28,7 +28,7 @@ export /**
       case cell_states.crossed:
         return {
           color: app_theme.materialTextInverted,
-          filled: false
+          filled: true
         }
       default:
         return {

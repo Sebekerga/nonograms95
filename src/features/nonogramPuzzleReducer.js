@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { cell_states, generatePuzzleClues } from "../common";
+import { cell_states, generatePuzzleClues } from "../app/common";
 
 const checkSolution = (puzzle, solution) => {
   // that is not the best way to do this
@@ -7,7 +7,8 @@ const checkSolution = (puzzle, solution) => {
 }
 
 // "solution" holds current players solution and "puzzle" holds a desired solution
-const initialState = {
+export const initialState = {
+  id: undefined,
   puzzle: {
     horizontal: [],
     vertical: []
@@ -24,12 +25,11 @@ const gameSlice = createSlice({
     // Loads a new puzzle passed in a payload and clears solution for a previous puzzle
     loadPuzzle: (state, action) => {
       return {
-        puzzle: generatePuzzleClues(action.payload),
-        solution: action.payload.map(
-          (layer) => layer.map(
-            el => cell_states.empty
-          )
-        ),
+        id: action.payload.id,
+        puzzle: action.payload.puzzle,
+        solution: Array.from({ length: action.payload.puzzle.vertical.length }, () =>
+          Array.from({ length: action.payload.puzzle.horizontal.length }, () =>
+            cell_states.empty)),
         solved: false
       }
     },
