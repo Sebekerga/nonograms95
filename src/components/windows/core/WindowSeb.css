@@ -1,3 +1,4 @@
+/* window menus */
 div.menu, div.submenu{
   position: relative;
   display: inline-block;
@@ -22,7 +23,22 @@ ul.submenu {
   margin: 0;
 }
 
+/* window header */
+div.header{
+  display: flex;
+}
+
+button.header{
+  align-self: center;
+}
+
+span.header{
+  flex: 1;
+}
+
+/* window */
 div.window{
+  position: absolute;
   top: 50%; 
   left: 50%;
   transform: translate(-50%, -50%);

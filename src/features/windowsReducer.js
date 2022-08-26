@@ -12,13 +12,22 @@ const windowsSlice = createSlice({
       if (!state.windows.find(w => w.id === action.payload.id))
         return {
           windows: state.windows.concat({
-            ...action.payload
+            ...action.payload,
+            menu: [],
+            z: 2000 + state.windows.length * 100
           })
         }
     },
+
     closeWindow: (state, action) => {
-      return state.windows.filter(w => w.id !== action.payload)
+      return {
+        windows: state.windows.filter(w => w.id !== action.payload).map((w, i) => ({
+          ...w,
+          z: 2000 + i * 100
+        }))
+      }
     },
+
     updateMenu: (state, action) => {
       return {
         ...state,
@@ -30,5 +39,5 @@ const windowsSlice = createSlice({
   }
 })
 
-export const { newWindow, closeWindow } = windowsSlice.actions
+export const { newWindow, closeWindow, updateMenu } = windowsSlice.actions
 export default windowsSlice.reducer
