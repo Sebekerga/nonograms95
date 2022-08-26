@@ -1,29 +1,14 @@
 import { useDispatch, useSelector } from "react-redux"
 import { Button, Divider, List, ListItem, Toolbar, Window, WindowContent, WindowHeader } from "react95"
-import { menu_item_types } from "./Menu"
-import PuzzleWindow from "../NonogramPuzzle"
+import { menu_item_types } from "../app/menu"
 import './WindowSeb.css'
-import { closeWindow, updateMenu } from "../../../features/windowsReducer"
+import { closeWindow, updateMenu } from "../features/windowsReducer"
 import { useTheme } from "styled-components"
-
-
-export const window_types = {
-  nonogram_puzzle: 0,
-  file_browser: 1
-}
-
-const resolveType = (type) => {
-  switch (type) {
-    case window_types.nonogram_puzzle:
-      return PuzzleWindow
-    default:
-      return undefined
-  }
-}
+import { resolveType } from "../app/windows"
 
 const WindowSeb = ({ id }) => {
 
-  const dispath = useDispatch()
+  const dispatch = useDispatch()
   const theme = useTheme()
 
   const MenuFolder = (props) => {
@@ -43,14 +28,14 @@ const WindowSeb = ({ id }) => {
     }
 
     const openMenu = () => {
-      dispath(updateMenu({
+      dispatch(updateMenu({
         id,
         menu: windows_menu.filter((_, i) => i < props.level).concat(props.title)
       }))
     }
 
     const closeMenu = () => {
-      dispath(updateMenu({
+      dispatch(updateMenu({
         id,
         menu: windows_menu.filter((_, i) => i < props.level)
       }))
@@ -75,8 +60,8 @@ const WindowSeb = ({ id }) => {
   const Menu = (props) => {
 
     const handleMenuSelection = (action) => {
-      dispath(updateMenu({ id, menu: [] }))
-      action()
+      dispatch(updateMenu({ id, menu: [] }))
+      action(dispatch)
     }
 
     const level = props.root
@@ -103,7 +88,7 @@ const WindowSeb = ({ id }) => {
   const window_content = resolveType(window_data.type)
 
   const closeThisWindow = () => {
-    dispath(closeWindow(id))
+    dispatch(closeWindow(id))
   }
 
   return <Window className='window' style={{ zIndex: `${window_data.z}` }}>

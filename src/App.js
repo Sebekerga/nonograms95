@@ -1,11 +1,10 @@
 import './App.css'
 import { useDispatch, useSelector } from "react-redux";
-import { loadPuzzle } from "./features/nonogramPuzzleReducer";
 import { useTheme } from 'styled-components';
-import { getNonogramClues, getNonogramsList } from './services/nonograms';
 import { useEffect } from 'react';
-import WindowSeb, { window_types } from './components/windows/core/WindowSeb';
-import { closeWindow, newWindow } from './features/windowsReducer'
+import WindowSeb from './components/WindowSeb';
+import { newWindow } from './features/windowsReducer'
+import { window_types } from './app/windows';
 
 const App = () => {
 
@@ -14,10 +13,10 @@ const App = () => {
   // opening nonograms window
   useEffect(() => {
     dispatch(newWindow({
-      id: 'non_puzzle_1',
+      id: 'nonogram',
       type: window_types.nonogram_puzzle
     }))
-  }, [])
+  }, [dispatch])
 
   const window_ids = (useSelector(state => state.windows.windows)).map(w => w.id)
 

@@ -5,7 +5,9 @@ import { useSelector } from "react-redux"
 import { useTheme } from "styled-components"
 import { Cutout } from "react95"
 import { initialState } from "../../features/nonogramPuzzleReducer"
-import { menu_folder, menu_entry } from "../Menu"
+import { menu_items } from "../../app/menu"
+import { newWindow } from "../../features/windowsReducer"
+import { window_types } from "../../app/windows"
 
 
 const Puzzle = () => {
@@ -53,16 +55,20 @@ const PuzzleWindow = {
     <Puzzle />
   </>,
   menu: [
-    menu_folder('File', [
-      menu_entry('Open puzzle', () => console.log('open puzzle')),
-      menu_folder('Open recent', [
-        menu_entry('puzzle 1', () => console.log('puzzle 1')),
-        menu_entry('puzzle 2', () => console.log('puzzle 2')),
+    menu_items.folder('File', [
+      menu_items.entry('Open', (dispatch) => 
+        dispatch(newWindow({
+          id: 'nonogram_browser',
+          type: window_types.file_browser
+        }))),
+      menu_items.folder('Open recent', [
+        menu_items.entry('puzzle 1', () => console.log('puzzle 1')),
+        menu_items.entry('puzzle 2', () => console.log('puzzle 2')),
       ]),
     ]),
-    menu_folder('Help', [
-      menu_entry('Puzzle rules', () => console.log('rules')),
-      menu_entry('About', () => console.log('about')),
+    menu_items.folder('Help', [
+      menu_items.entry('Puzzle rules', () => console.log('rules')),
+      menu_items.entry('About', () => console.log('about')),
     ])
   ]
 }
