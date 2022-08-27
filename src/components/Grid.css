@@ -4,6 +4,8 @@ tr.horizontal-clue, th.horizontal-clue {
 }
 ul.horizontal-clue {
   text-align: end;
+  display: flex;
+  justify-content: right;
 }
 
 ul.horizontal-clue>li{

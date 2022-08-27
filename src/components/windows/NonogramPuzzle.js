@@ -4,7 +4,7 @@ import './NonogramPuzzle.css'
 import { useSelector } from "react-redux"
 import { useTheme } from "styled-components"
 import { Cutout } from "react95"
-import { initialState } from "../../features/nonogramPuzzleReducer"
+import { initialState, loadPuzzle } from "../../features/nonogramPuzzleReducer"
 import { menu_items } from "../../app/menu"
 import { newWindow } from "../../features/windowsReducer"
 import { window_types } from "../../app/windows"
@@ -49,28 +49,40 @@ const Puzzle = () => {
   </>
 }
 
-const PuzzleWindow = {
+const recent = () => {
+  const local_recent = JSON.parse(localStorage.getItem('recent_nonograms'))
+
+  console.log(local_recent)
+
+  return local_recent 
+  ? local_recent.map((item, i) =>
+    menu_items.entry(`${item.name}`, (dispatch) => dispatch(loadPuzzle({
+      id: item.id,
+      puzzle: item.clues
+    })))
+  )
+  : []
+}
+
+const PuzzleWindow = (id) => ({
   title: 'Nonograms',
   content: <>
-    <Puzzle />
+    <Puzzle window_id={id} />
   </>,
   menu: [
     menu_items.folder('File', [
-      menu_items.entry('Open', (dispatch) => 
+      menu_items.entry('Open', (dispatch) =>
         dispatch(newWindow({
           id: 'nonogram_browser',
           type: window_types.file_browser
         }))),
-      menu_items.folder('Open recent', [
-        menu_items.entry('puzzle 1', () => console.log('puzzle 1')),
-        menu_items.entry('puzzle 2', () => console.log('puzzle 2')),
-      ]),
+      menu_items.folder('Open recent', recent()),
     ]),
     menu_items.folder('Help', [
       menu_items.entry('Puzzle rules', () => console.log('rules')),
       menu_items.entry('About', () => console.log('about')),
     ])
   ]
-}
+})
 
 export default PuzzleWindow

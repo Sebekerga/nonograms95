@@ -8,12 +8,12 @@ export const window_types = {
     file_browser: 1
   }
   
-export const resolveType = (type) => {
+export const resolveType = (type, id) => {
     switch (type) {
       case window_types.nonogram_puzzle:
-        return PuzzleWindow
+        return PuzzleWindow(id)
       case window_types.file_browser:
-        return FileBrowser
+        return FileBrowser(id)
       default:
         return undefined
     }

@@ -1,0 +1,27 @@
+div.filters {
+  padding-right: 4px;
+}
+
+.horizontal {
+  display: flex;
+}
+
+.paginator {
+  display: flex;
+  padding-top: 4px;
+}
+
+.paginator>span {
+  text-align: right;
+  flex: 1;
+  align-self: center;
+  padding-right: 8px;
+  padding-left: 8px;
+}
+
+td {
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

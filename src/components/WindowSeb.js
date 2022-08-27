@@ -6,14 +6,14 @@ import { closeWindow, updateMenu } from "../features/windowsReducer"
 import { useTheme } from "styled-components"
 import { resolveType } from "../app/windows"
 
-const WindowSeb = ({ id }) => {
+const WindowSeb = ({ id: window_id }) => {
 
   const dispatch = useDispatch()
   const theme = useTheme()
 
   const MenuFolder = (props) => {
 
-    const windows_menu = useSelector(state => state.windows.windows.find(w => w.id === id).menu)
+    const windows_menu = useSelector(state => state.windows.windows.find(w => w.id === window_id).menu)
     const open = windows_menu[props.level] === props.title
 
     const if_active_style = open ? {
@@ -29,14 +29,14 @@ const WindowSeb = ({ id }) => {
 
     const openMenu = () => {
       dispatch(updateMenu({
-        id,
+        id: window_id,
         menu: windows_menu.filter((_, i) => i < props.level).concat(props.title)
       }))
     }
 
     const closeMenu = () => {
       dispatch(updateMenu({
-        id,
+        id: window_id,
         menu: windows_menu.filter((_, i) => i < props.level)
       }))
     }
@@ -60,7 +60,7 @@ const WindowSeb = ({ id }) => {
   const Menu = (props) => {
 
     const handleMenuSelection = (action) => {
-      dispatch(updateMenu({ id, menu: [] }))
+      dispatch(updateMenu({ id: window_id, menu: [] }))
       action(dispatch)
     }
 
@@ -70,25 +70,27 @@ const WindowSeb = ({ id }) => {
         ? props.level
         : 0
 
-    return props.description.map(item => {
+    return props.description.map((item, i) => {
       switch (item.type) {
         case menu_item_types.folder:
-          return <MenuFolder title={item.title} variant={props.root ? 'menu' : 'submenu'} level={level}>
-            <Menu description={item.content} root={false} level={level + 1} />
-          </MenuFolder>
+          return item.content.length
+            ? <MenuFolder key={i} title={item.title} variant={props.root ? 'menu' : 'submenu'} level={level}>
+              <Menu description={item.content} root={false} level={level + 1} />
+            </MenuFolder>
+            : <ListItem key={i} size='sm' disabled>{item.title}</ListItem>
         case menu_item_types.entry:
-          return <ListItem size='sm' onClick={() => handleMenuSelection(item.action)}>{item.title}</ListItem>
+          return <ListItem key={i} size='sm' onClick={() => handleMenuSelection(item.action)}>{item.title}</ListItem>
         default:
-          return <Divider />
+          return <Divider key={i} />
       }
     })
   }
 
-  const window_data = useSelector(state => state.windows.windows.find(w => w.id === id))
-  const window_content = resolveType(window_data.type)
+  const window_data = useSelector(state => state.windows.windows.find(w => w.id === window_id))
+  const window_content = resolveType(window_data.type, window_id)
 
   const closeThisWindow = () => {
-    dispatch(closeWindow(id))
+    dispatch(closeWindow(window_id))
   }
 
   return <Window className='window' style={{ zIndex: `${window_data.z}` }}>
