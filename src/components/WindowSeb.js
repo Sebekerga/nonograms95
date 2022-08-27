@@ -19,7 +19,11 @@ const WindowSeb = ({ id: window_id }) => {
     const if_active_style = open ? {
       backgroundColor: theme.headerBackground,
       color: theme.headerText
-    } : undefined
+    } : {}
+    const final_style = {
+      ...if_active_style,
+      paddingRight: '4px'
+    }
 
     const toggleMenu = () => {
       open
@@ -44,9 +48,13 @@ const WindowSeb = ({ id: window_id }) => {
     return <div className={props.variant}>
       {props.variant === 'submenu'
         ?
-        <ListItem style={if_active_style}
+        <ListItem style={final_style}
           size='sm' onClick={toggleMenu} active={open} disabled={props.disabled}>
-          {props.title}
+          <div className='submenu'>
+            <span className='submenu text'>{props.title}</span>
+            <span className='submenu arrow'>{'>'}</span>
+          </div>
+
         </ListItem>
         : <Button size='sm' variant='menu' onClick={toggleMenu} active={open} disabled={props.disabled}>
           {props.title}
@@ -88,6 +96,9 @@ const WindowSeb = ({ id: window_id }) => {
 
   const window_data = useSelector(state => state.windows.windows.find(w => w.id === window_id))
   const window_content = resolveType(window_data.type, window_id)
+  const closable = window_content.config
+    ? window_content.config.closable
+    : true
 
   const closeThisWindow = () => {
     dispatch(closeWindow(window_id))
@@ -96,7 +107,7 @@ const WindowSeb = ({ id: window_id }) => {
   return <Window className='window' style={{ zIndex: `${window_data.z}` }}>
     <WindowHeader className='header'>
       <span className='header'>{window_content.title}</span>
-      <Button className='header' onClick={closeThisWindow}>X</Button>
+      {closable && (<Button className='header' onClick={closeThisWindow}>X</Button>)}
     </WindowHeader>
     <Toolbar style={{ paddingTop: '2px', padding: '0px' }}>
       <Menu description={window_content.menu} root={true} />

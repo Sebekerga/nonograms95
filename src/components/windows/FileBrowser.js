@@ -98,9 +98,10 @@ const FileBrowser = ({ window_id }) => {
 }
 const FileBrowserWindow = (id) => ({
   title: 'Open file',
-  content: <>
-    <FileBrowser window_id={id} />
-  </>,
+  content: <FileBrowser window_id={id} />,
+  config: {
+    closable: true
+  },
   menu: []
 })
 

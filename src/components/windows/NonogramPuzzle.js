@@ -54,21 +54,22 @@ const recent = () => {
 
   console.log(local_recent)
 
-  return local_recent 
-  ? local_recent.map((item, i) =>
-    menu_items.entry(`${item.name}`, (dispatch) => dispatch(loadPuzzle({
-      id: item.id,
-      puzzle: item.clues
-    })))
-  )
-  : []
+  return local_recent
+    ? local_recent.map((item, i) =>
+      menu_items.entry(`${item.name}`, (dispatch) => dispatch(loadPuzzle({
+        id: item.id,
+        puzzle: item.clues
+      })))
+    )
+    : []
 }
 
 const PuzzleWindow = (id) => ({
   title: 'Nonograms',
-  content: <>
-    <Puzzle window_id={id} />
-  </>,
+  content: <Puzzle window_id={id} />,
+  config: {
+    closable: false
+  },
   menu: [
     menu_items.folder('File', [
       menu_items.entry('Open', (dispatch) =>
@@ -79,8 +80,16 @@ const PuzzleWindow = (id) => ({
       menu_items.folder('Open recent', recent()),
     ]),
     menu_items.folder('Help', [
-      menu_items.entry('Puzzle rules', () => console.log('rules')),
-      menu_items.entry('About', () => console.log('about')),
+      menu_items.entry('Puzzle rules', (dispatch) =>
+        dispatch(newWindow({
+          id: 'rules',
+          type: window_types.rules
+        }))),
+      menu_items.entry('About', (dispatch) =>
+        dispatch(newWindow({
+          id: 'about',
+          type: window_types.about
+        }))),
     ])
   ]
 })

@@ -1,9 +1,14 @@
 /* window menus */
 div.menu, div.submenu{
   position: relative;
-  display: inline-block;
+  display: flex;
   align-self: left;
+  text-align: left;
 } 
+
+div.submenu{
+  flex: 1;
+}
 
 ul.menu{
   position: absolute;
@@ -21,6 +26,17 @@ ul.submenu {
 
 .menu>li, .submenu>li{
   margin: 0;
+  flex: 1;
+}
+
+span.submenu.text{
+  flex: 1;
+  text-align: left;
+  padding-right: 4px;
+}
+
+span.submenu.arrow{
+  padding-right: 4px;
 }
 
 /* window header */
